@@ -8,29 +8,23 @@
 - **TypeScript** - типизация
 - **Material-UI** - UI компоненты
 - **Zustand** - управление состоянием
+- **Prisma** - ORM для работы с БД
+- **PostgreSQL** - база данных
 - **Tailwind CSS** - стилизация
-
-## Перенос из Todo проекта
-
-Этот проект был создан путем переноса компонентов из простого Todo приложения в полноценное канбан приложение.
-
-### Перенесенные компоненты:
-- `Header` - заголовок приложения
-- `Panel` - панель добавления задач
-- `TodoList` - список задач
-- `TodoItem` - отдельная задача
-- `EditTodoItem` - редактирование задачи
-
-### Перенесенные технологии:
-- Zustand store для управления состоянием
-- Material-UI компоненты
-- TypeScript типы
 
 ## Установка и запуск
 
 ```bash
 # Установка зависимостей
 npm install
+
+# Настройка базы данных
+# 1. Создайте .env файл с DATABASE_URL
+# 2. Запустите миграции
+npx prisma migrate dev --name init
+
+# Генерация Prisma Client
+npx prisma generate
 
 # Запуск в режиме разработки
 npm run dev
@@ -42,11 +36,30 @@ npm run build
 npm start
 ```
 
+## Настройка базы данных
+
+1. **Выберите хостинг БД** (рекомендуется Supabase)
+2. **Создайте проект** и получите DATABASE_URL
+3. **Создайте .env файл**:
+   ```env
+   DATABASE_URL="postgresql://username:password@host:port/database_name"
+   ```
+4. **Запустите миграции**:
+   ```bash
+   npx prisma migrate dev --name init
+   ```
+5. **Проверьте подключение**:
+   ```bash
+   npx prisma studio
+   ```
+
 ## Структура проекта
 
 ```
 src/
 ├── app/                 # Next.js App Router
+│   ├── api/            # API роуты
+│   │   └── tasks/      # API для задач
 │   ├── layout.tsx      # Корневой layout
 │   ├── page.tsx        # Главная страница
 │   └── globals.css     # Глобальные стили
@@ -55,16 +68,36 @@ src/
 │   ├── Panel/          # Панель добавления
 │   ├── TodoList/       # Список задач
 │   └── Providers.tsx   # Material-UI провайдер
+├── lib/                # Утилиты
+│   └── prisma.ts       # Prisma клиент
 ├── store/              # Zustand stores
 │   └── todoStore.ts    # Store для задач
 └── types/              # TypeScript типы
-    └── todo.ts         # Типы для задач
+    ├── todo.ts         # Типы для задач
+    └── database.ts     # Типы БД
 ```
 
-## Следующие шаги
+## API Endpoints
 
-1. Добавить аутентификацию (регистрация/вход)
-2. Преобразовать в канбан доски
-3. Добавить перетаскивание задач
-4. Добавить категории/статусы
-5. Добавить персистентность данных
+### Задачи
+- `GET /api/tasks` - получить все задачи
+- `POST /api/tasks` - создать новую задачу
+- `GET /api/tasks/[id]` - получить задачу по ID
+- `PUT /api/tasks/[id]` - обновить задачу
+- `DELETE /api/tasks/[id]` - удалить задачу
+
+## Полезные команды
+
+```bash
+# Работа с Prisma
+npx prisma generate          # Генерация клиента
+npx prisma migrate dev       # Создание и применение миграций
+npx prisma studio           # Просмотр БД в браузере
+npx prisma db push          # Применение изменений схемы
+
+# Разработка
+npm run dev                 # Запуск в режиме разработки
+npm run build              # Сборка проекта
+npm run lint               # Проверка кода
+npx tsc --noEmit           # Проверка типов
+```
