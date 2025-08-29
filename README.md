@@ -1,36 +1,70 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Kanban App
 
-## Getting Started
+Полноценное канбан приложение с возможностью регистрации и входа под своим логином.
 
-First, run the development server:
+## Технологии
+
+- **Next.js 15** - React фреймворк
+- **TypeScript** - типизация
+- **Material-UI** - UI компоненты
+- **Zustand** - управление состоянием
+- **Tailwind CSS** - стилизация
+
+## Перенос из Todo проекта
+
+Этот проект был создан путем переноса компонентов из простого Todo приложения в полноценное канбан приложение.
+
+### Перенесенные компоненты:
+- `Header` - заголовок приложения
+- `Panel` - панель добавления задач
+- `TodoList` - список задач
+- `TodoItem` - отдельная задача
+- `EditTodoItem` - редактирование задачи
+
+### Перенесенные технологии:
+- Zustand store для управления состоянием
+- Material-UI компоненты
+- TypeScript типы
+
+## Установка и запуск
 
 ```bash
+# Установка зависимостей
+npm install
+
+# Запуск в режиме разработки
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+# Сборка для продакшена
+npm run build
+
+# Запуск продакшен версии
+npm start
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Структура проекта
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+src/
+├── app/                 # Next.js App Router
+│   ├── layout.tsx      # Корневой layout
+│   ├── page.tsx        # Главная страница
+│   └── globals.css     # Глобальные стили
+├── components/         # React компоненты
+│   ├── Header/         # Заголовок
+│   ├── Panel/          # Панель добавления
+│   ├── TodoList/       # Список задач
+│   └── Providers.tsx   # Material-UI провайдер
+├── store/              # Zustand stores
+│   └── todoStore.ts    # Store для задач
+└── types/              # TypeScript типы
+    └── todo.ts         # Типы для задач
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Следующие шаги
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Добавить аутентификацию (регистрация/вход)
+2. Преобразовать в канбан доски
+3. Добавить перетаскивание задач
+4. Добавить категории/статусы
+5. Добавить персистентность данных
