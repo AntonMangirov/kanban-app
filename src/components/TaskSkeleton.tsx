@@ -55,3 +55,4 @@ export function LoadingOverlay({ isVisible, message = 'Загрузка...' }: {
     </div>
   );
 }
+

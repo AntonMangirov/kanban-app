@@ -5,6 +5,7 @@ import { useTaskStore } from '@/store/taskStore';
 import { useState, useEffect } from 'react';
 import { LoadingOverlay } from '@/components/TaskSkeleton';
 import KanbanColumn from '@/components/KanbanColumn';
+import TaskCard from '@/components/TaskCard';
 
 export default function DashboardPage() {
   const { moveTask, tasks, isSyncing } = useTaskStore();
@@ -66,10 +67,16 @@ export default function DashboardPage() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 2000);
+    }, 1500);
     
     return () => clearTimeout(timer);
   }, []);
+
+  const getTasksByColumn = (columnId: string) => {
+    return tasks
+      .filter(task => task.columnId === columnId)
+      .sort((a, b) => a.order - b.order);
+  };
 
   return (
     <div className="p-6">
@@ -93,25 +100,31 @@ export default function DashboardPage() {
             isLoading={isLoading}
             taskCount={2}
           >
-            <div>Задачи To Do</div>
+            {getTasksByColumn('todo').map(task => (
+              <TaskCard key={task.id} task={task} />
+            ))}
           </KanbanColumn>
           
           <KanbanColumn 
             id="in-progress" 
             title="In Progress" 
             isLoading={isLoading}
-            taskCount={3}
+            taskCount={2}
           >
-            <div>Задачи In Progress</div>
+            {getTasksByColumn('in-progress').map(task => (
+              <TaskCard key={task.id} task={task} />
+            ))}
           </KanbanColumn>
           
           <KanbanColumn 
             id="done" 
             title="Done" 
             isLoading={isLoading}
-            taskCount={1}
+            taskCount={2}
           >
-            <div>Задачи Done</div>
+            {getTasksByColumn('done').map(task => (
+              <TaskCard key={task.id} task={task} />
+            ))}
           </KanbanColumn>
         </div>
       </DndContext>

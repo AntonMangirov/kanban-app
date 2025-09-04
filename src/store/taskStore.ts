@@ -5,7 +5,7 @@ export type TaskItem = {
   title: string;
   description?: string | null;
   priority?: 'LOW' | 'MEDIUM' | 'HIGH' | 'URGENT';
-  dueDate?: Date | null;
+  dueDate?: string | null;
   order: number;
   boardId: string;
   columnId: string;
@@ -29,7 +29,74 @@ interface TaskStoreState {
 }
 
 export const useTaskStore = create<TaskStoreState>((set, get) => ({
-  tasks: [],
+  tasks: [
+    {
+      id: '1',
+      title: 'Создать дизайн макета',
+      description: 'Разработать wireframes для главной страницы приложения',
+      priority: 'HIGH',
+      dueDate: '2024-01-15',
+      order: 1,
+      boardId: 'board-1',
+      columnId: 'todo',
+      assigneeId: 'user-1'
+    },
+    {
+      id: '2',
+      title: 'Настроить базу данных',
+      description: 'Создать схему БД и настроить подключение',
+      priority: 'URGENT',
+      dueDate: '2024-01-10',
+      order: 2,
+      boardId: 'board-1',
+      columnId: 'todo',
+      assigneeId: null
+    },
+    {
+      id: '3',
+      title: 'Реализовать API endpoints',
+      description: 'Создать REST API для работы с задачами',
+      priority: 'MEDIUM',
+      dueDate: '2024-01-20',
+      order: 1,
+      boardId: 'board-1',
+      columnId: 'in-progress',
+      assigneeId: 'user-2'
+    },
+    {
+      id: '4',
+      title: 'Написать тесты',
+      description: 'Покрыть код unit и integration тестами',
+      priority: 'LOW',
+      dueDate: '2024-01-25',
+      order: 2,
+      boardId: 'board-1',
+      columnId: 'in-progress',
+      assigneeId: 'user-3'
+    },
+    {
+      id: '5',
+      title: 'Деплой на продакшн',
+      description: 'Настроить CI/CD и задеплоить приложение',
+      priority: 'HIGH',
+      dueDate: '2024-01-12',
+      order: 1,
+      boardId: 'board-1',
+      columnId: 'done',
+      assigneeId: 'user-1'
+    },
+    {
+      id: '6',
+      title: 'Документация API',
+      description: 'Создать документацию для разработчиков',
+      priority: 'MEDIUM',
+      dueDate: '2024-01-18',
+      order: 2,
+      boardId: 'board-1',
+      columnId: 'done',
+      assigneeId: null
+    }
+  ],
   isSyncing: false,
   _optimisticSnapshots: {},
 

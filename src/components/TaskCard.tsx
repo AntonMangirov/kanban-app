@@ -47,7 +47,7 @@ export default function TaskCard({ task, className = '' }: TaskCardProps) {
   };
 
   const handleDeleteClick = (e: React.MouseEvent) => {
-    e.stopPropagation(); // Предотвращаем срабатывание drag
+    e.stopPropagation(); 
     setShowDeleteModal(true);
   };
 
@@ -58,7 +58,6 @@ export default function TaskCard({ task, className = '' }: TaskCardProps) {
       setShowDeleteModal(false);
     } catch (error) {
       console.error('Ошибка при удалении задачи:', error);
-      // Здесь можно добавить toast уведомление об ошибке
     } finally {
       setIsDeleting(false);
     }
@@ -105,7 +104,7 @@ export default function TaskCard({ task, className = '' }: TaskCardProps) {
             
             {task.dueDate && (
               <span className="text-xs text-gray-500">
-                {new Date(task.dueDate).toLocaleDateString()}
+                {new Date(task.dueDate).toLocaleDateString('ru-RU')}
               </span>
             )}
           </div>
