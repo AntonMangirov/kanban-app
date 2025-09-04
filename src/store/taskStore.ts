@@ -24,6 +24,8 @@ interface TaskStoreState {
   moveTask: (args: { taskId: string; targetColumnId: string; targetOrder: number }) => void;
 
   syncTaskUpdate: (taskId: string) => Promise<void>;
+
+  deleteTask: (taskId: string) => Promise<void>;
 }
 
 export const useTaskStore = create<TaskStoreState>((set, get) => ({
@@ -104,6 +106,35 @@ export const useTaskStore = create<TaskStoreState>((set, get) => ({
         }
       }
       set({ isSyncing: false });
+    }
+  },
+
+  deleteTask: async (taskId: string) => {
+    const { tasks } = get();
+    const task = tasks.find(t => t.id === taskId);
+    if (!task) return;
+
+    set({ isSyncing: true });
+
+    try {
+      const updatedTasks = tasks.filter(t => t.id !== taskId);
+      set({ tasks: updatedTasks });
+
+      const response = await fetch(`/api/tasks/${taskId}`, {
+        method: 'DELETE',
+      });
+
+      if (!response.ok) {
+        throw new Error('Ошибка удаления задачи');
+      }
+
+      set({ isSyncing: false });
+    } catch (error) {
+      console.error('Ошибка при удалении задачи:', error);
+      
+      set({ tasks, isSyncing: false });
+      
+      throw error;
     }
   },
 }));
